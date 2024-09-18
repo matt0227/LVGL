@@ -12,6 +12,9 @@ file(GLOB_RECURSE SOURCES  "lv_drivers/*.c" "lv_demos/*.c"  "lvgl/*.c" )
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) 
 SET(CMAKE_CXX_FLAGS "-O3")
 
+set(SDL2_DIR "E:/LVGL/SDL2-devel-2.30.7-mingw/SDL2-2.30.7/cmake")
+link_directories("E:/LVGL/SDL2-devel-2.30.7-mingw/SDL2-2.30.7/x86_64-w64-mingw32/lib")
+
 find_package(SDL2 REQUIRED SDL2)
 include_directories(${SDL2_INCLUDE_DIRS})
 add_executable(main main.c mouse_cursor_icon.c ${SOURCES} ${INCLUDES})
