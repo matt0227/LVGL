@@ -1,4 +1,4 @@
-从 https://github.com/lvgl 获取源码zip，下载MinGW，SDL2，放一份文件在souce code zip文件夹里
+从 https://github.com/lvgl 获取源码zip，下载MinGW，SDL2，放一份文件在source code & tool文件夹里
 
 1、https://github.com/lvgl/lv_port_pc_eclipse/tree/release/v8.2
 
