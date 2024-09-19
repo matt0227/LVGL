@@ -7,7 +7,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define DISP_BUF_SIZE (128 * 1024)
+#define DISP_BUF_SIZE (320 * 480 * 2)
 
 int main(void)
 {
@@ -29,7 +29,7 @@ int main(void)
     lv_disp_drv_init(&disp_drv);
     disp_drv.draw_buf   = &disp_buf;
     disp_drv.flush_cb   = fbdev_flush;
-    disp_drv.hor_res    = 800;
+    disp_drv.hor_res    = 320;
     disp_drv.ver_res    = 480;
     lv_disp_drv_register(&disp_drv);
 
@@ -44,10 +44,10 @@ int main(void)
 
 
     /*Set a cursor for the mouse*/
-    LV_IMG_DECLARE(mouse_cursor_icon)
-    lv_obj_t * cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
-    lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-    lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
+    // LV_IMG_DECLARE(mouse_cursor_icon)
+    // lv_obj_t * cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
+    // lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
+    // lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
 
 
     /*Create a Demo*/
