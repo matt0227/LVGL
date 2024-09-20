@@ -191,6 +191,10 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
     long int byte_location = 0;
     unsigned char bit_location = 0;
 
+	
+//	printf("area[%d,%d],[%d,%d]\n",area->x1,area->y1,area->x2,area->y2);
+//	printf("act[%d,%d],[%d,%d],w:%d\n",act_x1,act_y1,act_x2,act_y2,w);
+#if 1
     /*32 or 24 bit per pixel*/
     if(vinfo.bits_per_pixel == 32 || vinfo.bits_per_pixel == 24) {
         uint32_t * fbp32 = (uint32_t *)fbp;
@@ -241,9 +245,38 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
     } else {
         /*Not supported bit per pixel*/
     }
+#else
+	{
+        uint32_t * fbp32 = (uint32_t *)fbp;
+        int32_t x,y;
+	 int first = 0;//(vinfo.yoffset ? 0 : vinfo.yres) * finfo.line_length;;
+	 
+        for(y = act_y1; y <= act_y2; y++) {
+            //location = (act_x1 + vinfo.xoffset) + (y + (vinfo.yoffset ? 0 : vinfo.yres)) * finfo.line_length / 4;
+          //  for(x=act_x1;x <= act_x2;x++){
+
+	//		}
+            location = first + act_x1 + y*vinfo.xres;
+			
+            memcpy(&fbp32[location], (uint32_t *)color_p, (act_x2 - act_x1 + 1)*4);
+            color_p += w;
+        }
+	}	
+#endif
+//printf("vinfo.xoffset:%d  vinfo.yoffset:%d\n",vinfo.xoffset,vinfo.yoffset);
+
 
     //May be some direct update command is required
     //ret = ioctl(state->fd, FBIO_UPDATE, (unsigned long)((uintptr_t)rect));
+#if 1
+ //vinfo.yoffset = vinfo.yoffset ? 0 : vinfo.yres;
+    ioctl(fbfd, FBIOPAN_DISPLAY, &vinfo);
+#else
+    vinfo.yoffset = 1;
+    ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo);
+    vinfo.yoffset = 0;
+    ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo); 
+#endif
 
     lv_disp_flush_ready(drv);
 }
