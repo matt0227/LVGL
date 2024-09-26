@@ -7,7 +7,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define DISP_BUF_SIZE (320 * 480 * 2)
+#define DISP_BUF_SIZE (320 * 480 * 10)
 
 int main(void)
 {
