@@ -16,7 +16,7 @@
 #include "lvgl/examples/lv_examples.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lv_drivers/sdl/sdl.h"
-
+#include "GUI/gui_guider.h"
 /*********************
  *      DEFINES
  *********************/
@@ -61,6 +61,7 @@ static void hal_init(void);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+lv_ui guider_ui;
 
 int main(int argc, char **argv)
 {
@@ -73,6 +74,8 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
+  /*Create a GUI-Guider app */
+	setup_ui(&guider_ui);
 //  lv_example_switch_1();
 //  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
@@ -91,12 +94,13 @@ int main(int argc, char **argv)
 //  lv_example_flex_3();
 //  lv_example_label_1();
 
-    lv_demo_widgets();
+    // lv_demo_widgets();
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
       lv_timer_handler();
+      video_play(&guider_ui);
       usleep(5 * 1000);
   }
 
