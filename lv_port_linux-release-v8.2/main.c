@@ -6,8 +6,11 @@
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>
+#include "lvgl/GUI/gui_guider.h"
 
 #define DISP_BUF_SIZE (320 * 480 * 10)
+
+lv_ui guider_ui;
 
 int main(void)
 {
@@ -42,7 +45,8 @@ int main(void)
     indev_drv_1.read_cb = evdev_read;
     lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv_1);
 
-
+    /*Create a GUI-Guider app */
+	setup_ui(&guider_ui);
     /*Set a cursor for the mouse*/
     // LV_IMG_DECLARE(mouse_cursor_icon)
     // lv_obj_t * cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
@@ -51,11 +55,12 @@ int main(void)
 
 
     /*Create a Demo*/
-    lv_demo_widgets();
+    // lv_demo_widgets();
 
     /*Handle LitlevGL tasks (tickless mode)*/
     while(1) {
         lv_timer_handler();
+        video_play(&guider_ui);
         usleep(5000);
     }
 
